@@ -12,7 +12,7 @@ $port = "3306";
 </head>
 <body>
 
-<form action="users" method="post">
+<form action="Form_handling.php" method="post">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
         <br><br>
@@ -21,6 +21,6 @@ $port = "3306";
         <br><br>
         <button type="submit">Login</button>
     </form>
-    
+
 </body>
 </html>
