@@ -1,31 +1,36 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = isset($_POST['username']) ? trim($_POST['username']) : '';
-    $password = isset($_POST['password']) ? trim($_POST['password']) : '';
+$servername = "mysql";
+$username = "root"; 
+$password = "root"; 
+$database = "database";
 
-    if (empty($username) || empty($password)) {
-        echo "Both username and password are required.";
-        exit;
-    }
+$conn = new mysqli($servername, $username, $password, $database);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $password = $_POST['password'];
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    echo "LOGIN SUCCESSFULL!";
-}   
+$username = $_POST['username'];
+$password = $_POST['password'];
 
+$newusername = filter_var($username, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
+$username = $conn->real_escape_string($username);
+$password = $conn->real_escape_string($password);
 
+$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
+$sql = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
 
+if ($conn->query($sql) === TRUE) {
+    echo "Data inserted successfully! ";
+    echo "Hashed Password: " . $hashedPassword;
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
 
-
-
-
-
-
-
+$conn->close();
+?>
 
     
-?>
+
