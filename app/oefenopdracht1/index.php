@@ -1,28 +1,19 @@
 <?php
-
-$host = "mysql"; // Le host est le nom du service, présent dans le docker-compose.yml
-$dbname = "my-wonderful-website";
-$charset = "utf8";
-$port = "3306";
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
 ?>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Drenthe College docker web server</title>
+    <meta charset="UTF-8">
+    <title></title>
 </head>
 <body>
-
-<link rel="stylesheet" href="stylesheet.css">
-
-<form action="login.php" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-    <br><br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br><br>
-    <button type="submit">Login</button>
-</form>
-
+    <h2>Welcome <?php echo $_SESSION['username']; ?>!</h2>
+    <a href="login.php">Logout</a>
 </body>
 </html>
